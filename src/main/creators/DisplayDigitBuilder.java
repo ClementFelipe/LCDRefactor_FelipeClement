@@ -7,14 +7,13 @@ public class DisplayDigitBuilder {
 
     private static final char HORIZONTAL_CHARACTER = '-';
     private static final char VERTICAL_CHARACTER = '|';
-    private static final char SPACE_CHARACTER = ' ';
+    public static final char SPACE_CHARACTER = ' ';
 
     private DisplayDigit displayDigit;
 
     public void createDigit(int digitNumber, int segmentLength) {
 
         displayDigit = new DisplayDigit(digitNumber, segmentLength);
-
         createDisplayDigitMatrix();
 
     }

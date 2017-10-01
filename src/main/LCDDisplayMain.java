@@ -15,7 +15,35 @@ public class LCDDisplayMain {
 
     public static void main(String[] args) throws IOException {
 
-        String line;
+        showWelcomeMessage();
+
+        String inputLine;
+
+        while (true) {
+
+            inputLine = bufferedReader.readLine();
+
+            if (validInput(inputLine)) {
+
+                LCDDisplay lcdDisplay = createLCDDisplay(inputLine);
+                printLCDScreen(lcdDisplay);
+
+            } else if (inputLine.equals("0,0")) {
+                break;
+            } else {
+                continue;
+            }
+
+            bufferedWriter.write("\n");
+
+        }
+
+        bufferedWriter.close();
+        bufferedReader.close();
+
+    }
+
+    private static void showWelcomeMessage() throws IOException {
 
         bufferedWriter.write("****************************************************\n");
         bufferedWriter.write("*Welcome to the 7 segment LCD display refactor tool*\n");
@@ -28,51 +56,36 @@ public class LCDDisplayMain {
         bufferedWriter.write("Inut end will be marked by a line containing \"0,0\".\n");
         bufferedWriter.flush();
 
-        while (true) {
+    }
 
-            line = bufferedReader.readLine();
+    public static LCDDisplay createLCDDisplay(String line) {
 
-            if (validInput(line)) {
+        StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
 
-                StringTokenizer stringTokenizer = new StringTokenizer(line, ",");
+        String s_segmentLength = stringTokenizer.nextToken();
+        int segmentLength = Integer.parseInt(s_segmentLength);
 
-                String s_segmentLength = stringTokenizer.nextToken();
-                int segmentLength = Integer.parseInt(s_segmentLength);
+        String number = stringTokenizer.nextToken();
 
-                String number = stringTokenizer.nextToken();
+        LCDDisplayBuilder lcdDisplayBuilder = new LCDDisplayBuilder();
+        lcdDisplayBuilder.createLCDDisplay(number, segmentLength);
 
-                LCDDisplayBuilder lcdDisplayBuilder = new LCDDisplayBuilder();
-                lcdDisplayBuilder.createLCDDisplay(number, segmentLength);
+        for (char digit : number.toCharArray()) {
 
-                for (char digit : number.toCharArray()) {
+            DisplayDigitBuilder displayDigitBuilder = new DisplayDigitBuilder();
+            displayDigitBuilder.createDigit(Character.getNumericValue(digit), segmentLength);
 
-                    DisplayDigitBuilder displayDigitBuilder = new DisplayDigitBuilder();
-                    displayDigitBuilder.createDigit(Character.getNumericValue(digit), segmentLength);
+            for (char segment : displayDigitBuilder.getDisplayDigit().getSegments()) {
 
-                    for (char segment : displayDigitBuilder.getDisplayDigit().getSegments()) {
+                displayDigitBuilder.buildSegment(segment);
 
-                        displayDigitBuilder.buildSegment(segment);
-
-                    }
-
-                    lcdDisplayBuilder.buildDigit(displayDigitBuilder.getDisplayDigit());
-
-                }
-
-                printLCDScreen(lcdDisplayBuilder.getLcdDisplay());
-
-            } else if (line.equals("0,0")) {
-                break;
-            } else {
-                continue;
             }
 
-            bufferedWriter.write("\n");
+            lcdDisplayBuilder.buildDigit(displayDigitBuilder.getDisplayDigit());
 
         }
 
-        bufferedWriter.close();
-        bufferedReader.close();
+        return lcdDisplayBuilder.getLcdDisplay();
 
     }
 
