@@ -1,4 +1,4 @@
-package java;
+package main.entities;
 
 public class Point {
 
