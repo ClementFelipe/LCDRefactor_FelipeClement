@@ -1,9 +1,16 @@
 package main.model;
 
+/**
+ * This class represents the a pair of coordinates within 0 indexed matrix, where i indicates row and j indicates column
+ */
 public class SegmentPoint {
 
+    //Indicates the row within the matrix
     private int i;
+
+    //Indicates the column within the matrix
     private int j;
+
 
     public int getI() {
         return i;
