@@ -1,5 +1,5 @@
 # LCDRefactor_FelipeClement
-Simulation of 7 segment LCD screenMatrix through Java console apllication. Practical programming exercise for PSL intern selection process.
+Simulation of 7 digitSegment LCD screenMatrix through Java console apllication. Practical programming exercise for PSL intern selection process.
 
 # LCD refactor
 

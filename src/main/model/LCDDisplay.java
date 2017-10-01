@@ -1,6 +1,6 @@
-package main.entities;
+package main.model;
 
-public class LCDScreen {
+public class LCDDisplay {
 
     private char[][] screenMatrix;
 

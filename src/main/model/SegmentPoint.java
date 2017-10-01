@@ -1,6 +1,6 @@
-package main.entities;
+package main.model;
 
-public class Point {
+public class SegmentPoint {
 
     private int i;
     private int j;
